@@ -49,10 +49,13 @@ describe("NoteService - updateNote (Ejercicio 4)", () => {
         expect(notaUpdate).toBeUndefined();
     });
 
-    it('Actualizacion con Objeto Note Vacio', () => {
+    it('Actualizacion con Objeto Note Vacio-Retorna mismo objeto', () => {
         const nota: Note = servicio.createNote({ title: 'I Robot', content: 'habla de un robot XD', pinned: false });
         const notaUpdate: Note | undefined = servicio.updateNote(1, {});
-        expect(notaUpdate).toBeUndefined();
+        expect(notaUpdate).toBeDefined();
+        expect(notaUpdate?.title).toBe('I Robot');
+        expect(notaUpdate?.content).toBe('habla de un robot XD');
+        expect(notaUpdate?.pinned).toBe(false);
     });
 
 });
