@@ -1,7 +1,7 @@
 import request from "supertest";
 import { Application } from "express";
 import { makeApp } from "../../src/app";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 
 describe('PATCH /notes/:id', () => {
     it ('Responde 200 (ok) y actualiza parcialmente una nota', async() => {
@@ -32,5 +32,25 @@ describe('PATCH /notes/:id', () => {
 
         const updateNota = await request(app).patch(`/notes/${id}`).send({ title: '' });
         expect(updateNota.status).toBe(400);
+    });
+});
+
+describe('DELETE /notes/:id', () => {
+    let app: Application;
+
+    beforeEach(() =>{
+        app = makeApp(':memory:');        
+    });
+
+    it ('Responde 204 (borrado) exitosamente', async () => {
+        const postNota = await request(app).post('/notes').send({ title: 'Recital de Laguneros', content: 'Farabutes' });
+        const id: number = postNota.body.id;
+        const registroBorrado = await request(app).delete(`/notes/${id}`);
+        expect(registroBorrado.status).toBe(204);
+    });
+
+    it ('Responde 404 (No encontrado)', async() => {
+        const registroBorrado = await request(app).delete('/notes/1991');
+        expect(registroBorrado.status).toBe(404);
     });
 });
