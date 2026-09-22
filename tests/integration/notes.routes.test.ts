@@ -54,3 +54,25 @@ describe('DELETE /notes/:id', () => {
         expect(registroBorrado.status).toBe(404);
     });
 });
+
+describe ('GET /notes/:id ', () => {
+    it ('Responde 200 y devuelve la nota si existe', async () => {
+        const app: Application = makeApp(':memory:');
+
+        const createRes= await request(app).post('/notes').send({ title: 'Comprar pan ', content: 'Antes de las 20hs'});
+
+        const id = createRes.body.id;
+        const res= await request(app).get(`/notes/${id}`);
+        expect(res.status).toBe(200);
+        expect(res.body?.id).toBe(id);
+        expect(res.body?.title).toBe('Comprar pan');
+        expect(res.body?.content).toBe('Antes de las 20hs');
+    });
+
+    it ('Responde 404 si el ID no existe', async () => {
+        const app: Application = makeApp(':memory:');
+        const res= await request(app).get('/notes/1991');
+        expect(res.status).toBe(404);
+        expect(res.body.error).toBe('NotFound');  
+    });
+});
