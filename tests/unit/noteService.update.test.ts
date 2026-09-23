@@ -23,7 +23,7 @@ describe("NoteService - updateNote (Ejercicio 4)", () => {
         expect(notaUpdate).toBeDefined()
         expect(notaUpdate?.title).toBe('1984 Is Now');
         expect(notaUpdate?.content).toBe(nota.content);
-        expect(notaUpdate?.pinned).toBe(nota.content);
+        expect(notaUpdate?.pinned).toBe(nota.pinned);
     });
 
     it('Actualiza solo Content', () => {
@@ -32,14 +32,14 @@ describe("NoteService - updateNote (Ejercicio 4)", () => {
       expect(notaUpdate).toBeDefined();
       expect(notaUpdate?.title).toBe(nota.title);
       expect(notaUpdate?.content).toBe('Ups! modifique el contenido Solamente ;-)');
-      expect(notaUpdate?.pinned).toBe(nota.title);
+      expect(notaUpdate?.pinned).toBe(nota.pinned);
     });
 
     it('Actualiza solo pinned', () => {
         const nota: Note = servicio.createNote({ title: 'Farenheit 451', content: 'Lo siento ya fue quemado ;-)', pinned: true });
         const notaUpdate: Note | undefined = servicio.updateNote(1, { pinned: false });
         expect(notaUpdate).toBeDefined();
-        expect(notaUpdate?.pinned).toBe('false');
+        expect(notaUpdate?.pinned).toBe(false);
         expect(notaUpdate?.title).toBe(nota.title);
         expect(nota.content).toBe(nota.content);
     });
