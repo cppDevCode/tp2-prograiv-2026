@@ -39,6 +39,7 @@ describe('NoteService - createNote + notify (Ejercicio 6)', () => {
     const note = service.createNote({
       title: 'Normal',
       content: 'Sin urgencia',
+      pinned: false,
     });
 
     expect(note.title).toBe('Normal');
