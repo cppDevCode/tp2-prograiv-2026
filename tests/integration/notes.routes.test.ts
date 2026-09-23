@@ -59,7 +59,7 @@ describe ('GET /notes/:id ', () => {
     it ('Responde 200 y devuelve la nota si existe', async () => {
         const app: Application = makeApp(':memory:');
 
-        const createRes= await request(app).post('/notes').send({ title: 'Comprar pan ', content: 'Antes de las 20hs'});
+        const createRes= await request(app).post('/notes').send({ title: 'Comprar pan', content: 'Antes de las 20hs'});
 
         const id = createRes.body.id;
         const res= await request(app).get(`/notes/${id}`);
